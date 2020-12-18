@@ -72,6 +72,18 @@ public class File extends AbstractEntityWithoutId implements Serializable {
 
 	private String nationality;
 	private String inssuranceCompany;
+	/////////////////////////////////////
+	/////////////////////////////////////
+	/////////////////////////////////////
+	private String bloodPressure;
+	private String bloodType;
+	private String weight;
+	private String height;
+	private String temperature;
+	private String breathing;
+	/////////////////////////////////////
+	/////////////////////////////////////
+	/////////////////////////////////////
 
 	@Column
 	private boolean hasRemainingDept;
@@ -442,5 +454,89 @@ public class File extends AbstractEntityWithoutId implements Serializable {
 	 */
 	public void setTreatmentPlan(String treatmentPlan) {
 		this.treatmentPlan = treatmentPlan;
+	}
+
+	/**
+	 * @return the bloodPressure
+	 */
+	public String getBloodPressure() {
+		return bloodPressure;
+	}
+
+	/**
+	 * @param bloodPressure the bloodPressure to set
+	 */
+	public void setBloodPressure(String bloodPressure) {
+		this.bloodPressure = bloodPressure;
+	}
+
+	/**
+	 * @return the bloodType
+	 */
+	public String getBloodType() {
+		return bloodType;
+	}
+
+	/**
+	 * @param bloodType the bloodType to set
+	 */
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
+	/**
+	 * @return the weight
+	 */
+	public String getWeight() {
+		return weight;
+	}
+
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public String getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return the temperature
+	 */
+	public String getTemperature() {
+		return temperature;
+	}
+
+	/**
+	 * @param temperature the temperature to set
+	 */
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
+
+	/**
+	 * @return the breathing
+	 */
+	public String getBreathing() {
+		return breathing;
+	}
+
+	/**
+	 * @param breathing the breathing to set
+	 */
+	public void setBreathing(String breathing) {
+		this.breathing = breathing;
 	}
 }

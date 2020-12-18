@@ -218,6 +218,94 @@
 			<p:spacer></p:spacer>
 			<p:separator></p:separator>
 
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Blood Pressure:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.bloodPressure}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Blood Type:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.bloodType}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Weight:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.weight}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Height:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.height}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Temperature:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.temperature}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-12">
+							<h:outputLabel styleClass="control-label" value="Breathing:" />
+						</div>
+						<div class="col-md-12">
+							<h:inputText styleClass="form-control"
+								value="#{fileBean.file.breathing}" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<p:spacer></p:spacer>
+			<p:separator></p:separator>
+
 			<div class="col-md-12">
 				<ui:repeat value="#{fileBean.file.medicalHistories}"
 					var="medicalHistory">
