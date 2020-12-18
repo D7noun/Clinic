@@ -10,3 +10,21 @@
 	left: 95px;
 	position: relative;
 }
+
+.ui-column-customfilter {
+	float: left;
+	width: 80%;
+}
+
+.ui-column-customfilter input {
+	width: 100%;
+}
+
+.ui-sortable-column-icon {
+	margin-top: 6px !important;
+}
+
+.control-label {
+	padding: 7px 20px;
+	font-size: 15px !important;
+}

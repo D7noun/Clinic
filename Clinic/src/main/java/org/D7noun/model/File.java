@@ -70,8 +70,20 @@ public class File extends AbstractEntityWithoutId implements Serializable {
 	@Column
 	private String occupation;
 
+	private String nationality;
+	private String inssuranceCompany;
+
 	@Column
 	private boolean hasRemainingDept;
+
+	@Column(length = 1000)
+	private String mainProblem;
+	@Column(length = 1000)
+	private String firstTest;
+	@Column(length = 1000)
+	private String firstDiagnose;
+	@Column(length = 1000)
+	private String treatmentPlan;
 
 	@Column(length = 1000)
 	private String detailsOfPayment;
@@ -81,13 +93,13 @@ public class File extends AbstractEntityWithoutId implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "file_id")
-	private List<MedicalHistory> medicalHistories = new ArrayList<MedicalHistory>();
+	private List<MedicalHistory> medicalHistories = new ArrayList<>();
 
 	@OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Treatment> treatments = new ArrayList<Treatment>();
+	private List<Treatment> treatments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "file", cascade = CascadeType.MERGE, orphanRemoval = true)
-	private Set<Attachment> attachments = new HashSet<Attachment>();
+	private Set<Attachment> attachments = new HashSet<>();
 
 	public int getAge() {
 		if (dateOfBirth != null) {
@@ -346,5 +358,89 @@ public class File extends AbstractEntityWithoutId implements Serializable {
 	 */
 	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
 		this.medicalHistories = medicalHistories;
+	}
+
+	/**
+	 * @return the nationality
+	 */
+	public String getNationality() {
+		return nationality;
+	}
+
+	/**
+	 * @param nationality the nationality to set
+	 */
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	/**
+	 * @return the inssuranceCompany
+	 */
+	public String getInssuranceCompany() {
+		return inssuranceCompany;
+	}
+
+	/**
+	 * @param inssuranceCompany the inssuranceCompany to set
+	 */
+	public void setInssuranceCompany(String inssuranceCompany) {
+		this.inssuranceCompany = inssuranceCompany;
+	}
+
+	/**
+	 * @return the mainProblem
+	 */
+	public String getMainProblem() {
+		return mainProblem;
+	}
+
+	/**
+	 * @param mainProblem the mainProblem to set
+	 */
+	public void setMainProblem(String mainProblem) {
+		this.mainProblem = mainProblem;
+	}
+
+	/**
+	 * @return the firstTest
+	 */
+	public String getFirstTest() {
+		return firstTest;
+	}
+
+	/**
+	 * @param firstTest the firstTest to set
+	 */
+	public void setFirstTest(String firstTest) {
+		this.firstTest = firstTest;
+	}
+
+	/**
+	 * @return the firstDiagnose
+	 */
+	public String getFirstDiagnose() {
+		return firstDiagnose;
+	}
+
+	/**
+	 * @param firstDiagnose the firstDiagnose to set
+	 */
+	public void setFirstDiagnose(String firstDiagnose) {
+		this.firstDiagnose = firstDiagnose;
+	}
+
+	/**
+	 * @return the treatmentPlan
+	 */
+	public String getTreatmentPlan() {
+		return treatmentPlan;
+	}
+
+	/**
+	 * @param treatmentPlan the treatmentPlan to set
+	 */
+	public void setTreatmentPlan(String treatmentPlan) {
+		this.treatmentPlan = treatmentPlan;
 	}
 }

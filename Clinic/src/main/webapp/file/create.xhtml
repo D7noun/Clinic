@@ -53,7 +53,7 @@
 			<c:choose>
 				<c:when test='#{!empty fileBean.id}'>
 					<h:link outcome="file-treatments" title="File Appointments"
-						styleClass="a-right-arrows">
+						styleClass="a-right-arrows margin-right-half">
 						<img src="../resources/right-arrow.png" class="right-arrows"></img>
 						<f:param name="id" value="#{fileBean.id}" />
 					</h:link>
@@ -123,6 +123,20 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-4">
+								<h:outputLabel styleClass="control-label"
+									for="fileBeanFileNationality" value="Nationality:" />
+							</div>
+							<div class="col-md-8">
+								<h:inputText id="fileBeanFileNationality"
+									styleClass="form-control" value="#{fileBean.file.nationality}" />
+								<h:message for="fileBeanFileNationality" styleClass="error" />
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="col-md-6">
@@ -181,6 +195,22 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-4">
+								<h:outputLabel styleClass="control-label"
+									for="fileBeanFileInssuranceCompany" value="Insurrance Company:" />
+							</div>
+							<div class="col-md-8">
+								<h:inputText id="fileBeanFileInssuranceCompany"
+									styleClass="form-control"
+									value="#{fileBean.file.inssuranceCompany}" />
+								<h:message for="fileBeanFileInssuranceCompany"
+									styleClass="error" />
+							</div>
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -209,6 +239,59 @@
 						</div>
 					</div>
 				</ui:repeat>
+			</div>
+
+			<p:spacer></p:spacer>
+			<p:separator></p:separator>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-2">
+						<h:outputLabel for="fileBeanFileMainProblem" value="Main Problem:" />
+					</div>
+					<div class="col-md-10">
+						<p:inputTextarea id="fileBeanFileMainProblem" maxlength="1000"
+							styleClass="textArea" value="#{fileBean.file.mainProblem}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-2">
+						<h:outputLabel for="fileBeanFileFirstTest" value="First Test:" />
+					</div>
+					<div class="col-md-10">
+						<p:inputTextarea id="fileBeanFileFirstTest" maxlength="1000"
+							styleClass="textArea" value="#{fileBean.file.firstTest}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-2">
+						<h:outputLabel for="fileBeanFileFirstDiagnose"
+							value="First Diagnose:" />
+					</div>
+					<div class="col-md-10">
+						<p:inputTextarea id="fileBeanFileFirstDiagnose" maxlength="1000"
+							styleClass="textArea" value="#{fileBean.file.firstDiagnose}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-md-2">
+						<h:outputLabel for="fileBeanFileTreatmentPlan"
+							value="Treatment Plan:" />
+					</div>
+					<div class="col-md-10">
+						<p:inputTextarea id="fileBeanFileTreatmentPlan" maxlength="1000"
+							styleClass="textArea" value="#{fileBean.file.treatmentPlan}" />
+					</div>
+				</div>
 			</div>
 
 			<p:spacer></p:spacer>

@@ -20,7 +20,7 @@
 	<ui:define name="header">
 		Treatments
 			<h:link outcome="create.xhtml" title="File"
-			styleClass="a-left-arrows">
+			styleClass="a-left-arrows margin-right-half">
 			<img src="../resources/left-arrow.png" class="left-arrows" />
 			<f:param name="id" value="#{treatmentsController.fileId}" />
 		</h:link>
@@ -34,22 +34,6 @@
 	<ui:define name="footer" />
 
 	<ui:define name="main">
-
-		<style>
-.ui-calendar input, .ui-spinner input {
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555 !important;
-	background-color: #fff !important;
-	background-image: none !important;
-	border: 1px solid #ccc !important;
-	border-radius: 4px !important;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
-}
-</style>
 		<h:form id="fileTreatments" prependId="false">
 			<h:messages globalOnly="true" styleClass="error" />
 			<p:growl id="msg" showDetail="false" />
@@ -62,7 +46,7 @@
 						paginator="true"
 						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,15,20,50" paginatorAlwaysVisible="false"
-						paginatorPosition="bottom"
+						paginatorPosition="bottom" widgetVar="itemVar"
 						value="#{treatmentsController.file.treatments}" var="treatment"
 						rowKey="#{treatment.id}" rowIndexVar="index" editable="true"
 						editMode="cell">
@@ -82,12 +66,17 @@
 
 						<p:column id="date" width="120" headerText="Date"
 							sortBy="#{treatment.date}">
-							<p:calendar value="#{treatment.date}" pattern="dd-MM-yyyy" />
+							<p:calendar value="#{treatment.date}" pattern="dd-MM-yyyy"
+								inputStyleClass="form-control" />
 						</p:column>
 
-						<p:column id="treatment" width="200" headerText="Treatment"
+						<p:column id="treatment" width="200"
 							filterBy="#{treatment.treatment}" sortBy="#{treatment.treatment}"
 							filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Treatment" />
+							</f:facet>
 							<p:selectOneMenu value="#{treatment.treatment}"
 								style="width: 100%;">
 								<f:selectItem />
@@ -96,39 +85,55 @@
 							</p:selectOneMenu>
 						</p:column>
 
-						<p:column id="details" width="200" headerText="Details"
-							filterBy="#{treatment.details}" sortBy="#{treatment.details}"
-							filterMatchMode="contains">
+						<p:column id="details" width="200" filterBy="#{treatment.details}"
+							sortBy="#{treatment.details}" filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Details" />
+							</f:facet>
 							<h:inputTextarea styleClass="form-control"
 								value="#{treatment.details}" />
 						</p:column>
 
-						<p:column id="total" width="120" headerText="Total"
-							filterBy="#{treatment.total}" sortBy="#{treatment.total}"
-							filterMatchMode="contains">
+						<p:column id="total" width="120" filterBy="#{treatment.total}"
+							sortBy="#{treatment.total}" filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Total" />
+							</f:facet>
 							<p:spinner styleClass="text-align-left"
 								value="#{treatment.total}" style="width: 100%;" min="0"
 								stepFactor="0.1" />
 						</p:column>
 
-						<p:column id="received" width="120" headerText="Received"
+						<p:column id="received" width="120"
 							filterBy="#{treatment.received}" sortBy="#{treatment.received}"
 							filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Received" />
+							</f:facet>
 							<p:spinner styleClass="text-align-left"
 								value="#{treatment.received}" style="width: 100%;" min="0"
 								stepFactor="0.1" />
 						</p:column>
 
-						<p:column id="balance" width="120" headerText="Balance"
-							filterBy="#{treatment.balance}" sortBy="#{treatment.balance}"
-							filterMatchMode="contains">
+						<p:column id="balance" width="120" filterBy="#{treatment.balance}"
+							sortBy="#{treatment.balance}" filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Balance" />
+							</f:facet>
 							<h:inputText styleClass="form-control"
 								value="#{treatment.balance}" disabled="true" />
 						</p:column>
 
-						<p:column id="drName" width="120" headerText="Dr. Name"
-							filterBy="#{treatment.drName}" sortBy="#{treatment.drName}"
-							filterMatchMode="contains">
+						<p:column id="drName" width="120" filterBy="#{treatment.drName}"
+							sortBy="#{treatment.drName}" filterMatchMode="contains">
+							<f:facet name="filter">
+								<p:inputText styleClass="form-control"
+									onkeyup="PF('itemVar').filter()" placeholder="Dr. Name" />
+							</f:facet>
 							<p:selectOneMenu value="#{treatment.drName}" style="width: 100%;">
 								<f:selectItem />
 								<f:selectItems value="#{treatmentsController.allDoctors}"
