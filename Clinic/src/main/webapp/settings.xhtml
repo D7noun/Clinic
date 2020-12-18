@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:param name="pageTitle" value="Settings" />
+
+	<ui:define name="header">
+		Settings
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+
+		<h:form id="settings" prependId="false">
+			<p:growl id="msg" showDetail="false" />
+
+			<div class="col-md-3">
+				<p:dataTable id="diseaseDataTable" widgetVar="diseaseVar"
+					value="#{settingsController.diseases}" var="settings"
+					rowKey="#{settings.id}" rowIndexVar="index" editable="true"
+					editMode="cell">
+
+					<f:facet name="header">
+
+						<h:outputText value="Diseases" styleClass="table-headerText" />
+
+						<h:commandLink action="#{settingsController.addDisease()}"
+							styleClass="btn btn-primary white table-headerButton">
+							<f:ajax />
+							<i class="fa fa-plus white" />
+						</h:commandLink>
+
+					</f:facet>
+
+					<p:column id="index" width="50">
+						<h:outputText value="#{index+1}"></h:outputText>
+					</p:column>
+
+					<p:column id="actions" width="50">
+						<h:commandLink styleClass="btn btn-sm btn-danger white"
+							action="#{settingsController.selectForDeleteAction(settings)}"
+							onclick="PF('diseaseDeleteDialogVar').show()">
+							<i class="fa fa-trash white" />
+							<f:ajax />
+						</h:commandLink>
+					</p:column>
+
+					<p:column id="disease" filterBy="#{settings.value}"
+						filterMatchMode="contains">
+						<f:facet name="filter">
+							<p:inputText onkeyup="PF('diseaseVar').filter()"
+								placeholder="Disease" />
+						</f:facet>
+						<h:inputText styleClass="form-control" value="#{settings.value}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+			<div class="col-md-3">
+				<p:dataTable id="expenseDataTable" widgetVar="expenseVar"
+					value="#{settingsController.expenses}" var="settings"
+					rowKey="#{settings.id}" rowIndexVar="index" editable="true"
+					editMode="cell">
+
+					<f:facet name="header">
+
+						<h:outputText value="Expenses" styleClass="table-headerText" />
+
+						<h:commandLink action="#{settingsController.addExpense()}"
+							styleClass="btn btn-primary white table-headerButton">
+							<f:ajax />
+							<i class="fa fa-plus white" />
+						</h:commandLink>
+
+					</f:facet>
+
+					<p:column id="index" width="50">
+						<h:outputText value="#{index+1}"></h:outputText>
+					</p:column>
+
+					<p:column id="actions" width="50">
+						<h:commandLink styleClass="btn btn-sm btn-danger white"
+							action="#{settingsController.selectForDeleteAction(settings)}"
+							onclick="PF('expenseDeleteDialogVar').show()">
+							<i class="fa fa-trash white" />
+							<f:ajax />
+						</h:commandLink>
+					</p:column>
+
+					<p:column id="expense" filterBy="#{settings.value}"
+						filterMatchMode="contains">
+						<f:facet name="filter">
+							<p:inputText onkeyup="PF('expenseVar').filter()"
+								placeholder="Expense" />
+						</f:facet>
+						<h:inputText styleClass="form-control" value="#{settings.value}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+			<div class="col-md-3">
+				<p:dataTable id="treatmentDataTable" widgetVar="treatmentVar"
+					value="#{settingsController.treatments}" var="settings"
+					rowKey="#{settings.id}" rowIndexVar="index" editable="true"
+					editMode="cell">
+
+					<f:facet name="header">
+
+						<h:outputText value="Treatments" styleClass="table-headerText" />
+
+						<h:commandLink action="#{settingsController.addTreatment()}"
+							styleClass="btn btn-primary white table-headerButton">
+							<f:ajax />
+							<i class="fa fa-plus white" />
+						</h:commandLink>
+
+					</f:facet>
+
+					<p:column id="index" width="50">
+						<h:outputText value="#{index+1}"></h:outputText>
+					</p:column>
+
+					<p:column id="actions" width="50">
+						<h:commandLink styleClass="btn btn-sm btn-danger white"
+							action="#{settingsController.selectForDeleteAction(settings)}"
+							onclick="PF('treatmentDeleteDialogVar').show()">
+							<i class="fa fa-trash white" />
+							<f:ajax />
+						</h:commandLink>
+					</p:column>
+
+					<p:column id="treatment" filterBy="#{settings.value}"
+						filterMatchMode="contains">
+						<f:facet name="filter">
+							<p:inputText onkeyup="PF('treatmentVar').filter()"
+								placeholder="Treatment" />
+						</f:facet>
+						<h:inputText styleClass="form-control" value="#{settings.value}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+			<div class="col-md-3">
+				<p:dataTable id="doctorDataTable" widgetVar="doctorVar"
+					value="#{settingsController.doctors}" var="settings"
+					rowKey="#{settings.id}" rowIndexVar="index" editable="true"
+					editMode="cell">
+
+					<f:facet name="header">
+
+						<h:outputText value="Doctors" styleClass="table-headerText" />
+
+						<h:commandLink action="#{settingsController.addDoctor()}"
+							styleClass="btn btn-primary white table-headerButton">
+							<f:ajax />
+							<i class="fa fa-plus white" />
+						</h:commandLink>
+
+					</f:facet>
+
+					<p:column id="index" width="50">
+						<h:outputText value="#{index+1}"></h:outputText>
+					</p:column>
+
+					<p:column id="actions" width="50">
+						<h:commandLink styleClass="btn btn-sm btn-danger white"
+							action="#{settingsController.selectForDeleteAction(settings)}"
+							onclick="PF('doctorDeleteDialogVar').show()">
+							<i class="fa fa-trash white" />
+							<f:ajax />
+						</h:commandLink>
+					</p:column>
+
+					<p:column id="doctor" filterBy="#{settings.value}"
+						filterMatchMode="contains">
+						<f:facet name="filter">
+							<p:inputText onkeyup="PF('doctorVar').filter()"
+								placeholder="Doctor" />
+						</f:facet>
+						<h:inputText styleClass="form-control" value="#{settings.value}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="buttons">
+						<h:commandLink value="Save" action='#{settingsController.save()}'
+							styleClass="btn btn-success">
+							<f:ajax execute="@form" render=":msg" />
+						</h:commandLink>
+					</div>
+				</div>
+			</div>
+
+			<p:dialog id="diseaseDeleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="diseaseDeleteDialogVar">
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+				<h:commandLink value="Ok"
+					action="#{settingsController.deleteDisease()}"
+					styleClass="btn btn-primary popup-buttons"
+					onclick="PF('diseaseDeleteDialogVar').hide()">
+					<f:ajax />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('diseaseDeleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+			</p:dialog>
+
+			<p:dialog id="expenseDeleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="expenseDeleteDialogVar">
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+				<h:commandLink value="Ok"
+					action="#{settingsController.deleteExpense()}"
+					styleClass="btn btn-primary popup-buttons"
+					onclick="PF('expenseDeleteDialogVar').hide()">
+					<f:ajax />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('expenseDeleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+			</p:dialog>
+
+			<p:dialog id="treatmentDeleteDialog" draggable="false"
+				closable="false" modal="true" height="50" width="300"
+				resizable="false" widgetVar="treatmentDeleteDialogVar">
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+				<h:commandLink value="Ok"
+					action="#{settingsController.deleteTreatment()}"
+					styleClass="btn btn-primary popup-buttons"
+					onclick="PF('treatmentDeleteDialogVar').hide()">
+					<f:ajax />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('treatmentDeleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+			</p:dialog>
+
+			<p:dialog id="doctorDeleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="doctorDeleteDialogVar">
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+				<h:commandLink value="Ok"
+					action="#{settingsController.deleteDoctor()}"
+					onclick="PF('doctorDeleteDialogVar').hide()"
+					styleClass="btn btn-primary popup-buttons">
+					<f:ajax />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('doctorDeleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+			</p:dialog>
+
+		</h:form>
+
+
+	</ui:define>
+
+
+</ui:composition>

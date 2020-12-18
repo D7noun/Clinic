@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{fileBean.page}' />
+		<f:event type="preRenderView" listener='#{fileBean.paginate}' />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Files" />
+
+	<ui:define name="header">
+		File
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Files
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="search">
+
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="fileBeanExampleName" value="Name:" />
+						<h:panelGroup>
+							<h:inputText id="fileBeanExampleName" styleClass="form-control"
+								value="#{fileBean.example.name}" />
+							<h:message for="fileBeanExampleName" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="fileBeanExampleDrName" value="Dr. Name:" />
+						<h:panelGroup>
+							<h:inputText id="fileBeanExampleDrName" styleClass="form-control"
+								value="#{fileBean.drName}" />
+							<h:message for="fileBeanExampleDrName" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="fileBeanExampleRemainDeput"
+							value="Has Remaining Debit" />
+						<h:panelGroup>
+							<p:inputSwitch id="fileBeanExampleRemainDeput"
+								style="margin-top: 5px;"
+								value="#{fileBean.example.hasRemainingDept}" onLabel="Yes"
+								offLabel="No"></p:inputSwitch>
+							<h:message for="fileBeanExampleRemainDeput" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="fileBeanExampleSixMonth"
+							value="Six Month Absent:" />
+						<h:panelGroup>
+							<p:inputSwitch id="fileBeanExampleSixMonth"
+								style="margin-top: 5px;" value="#{fileBean.sixMonthsPatients}"
+								onLabel="Yes" offLabel="No"></p:inputSwitch>
+							<h:message for="fileBeanExampleSixMonth" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action='#{fileBean.search}'
+							styleClass="btn btn-primary" />
+						<h:commandLink value="Create New" action='#{fileBean.create}'
+							styleClass="btn btn-success" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="fileBeanPageItems" styleClass="data-table"
+				value="#{fileBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:link outcome="/file/create">
+						<f:param name="id" value="#{_item.fileNumber}" />
+						<h:outputText id="_itemName" value="#{_item.name}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Phone Number" />
+						<h:commandLink action="#{fileBean.exportToExcel()}"
+							styleClass="btn btn-xs" style="margin-bottom: 1px;">
+							<i class="fa fa-file-excel-o" />
+						</h:commandLink>
+					</f:facet>
+					<h:link outcome="/file/create">
+						<f:param name="id" value="#{_item.fileNumber}" />
+						<h:outputText id="_itemPhoneNumber" value="#{_item.phoneNumber}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Doctors" />
+					</f:facet>
+					<h:link outcome="/file/create">
+						<f:param name="id" value="#{_item.fileNumber}" />
+						<h:outputText id="_itemDrNames"
+							value="#{fileBean.getDrNames(_item)}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value='#{fileBean}' />
+			</ui:include>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

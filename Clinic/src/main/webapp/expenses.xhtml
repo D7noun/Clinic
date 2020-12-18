@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<ui:param name="pageTitle" value="Expenses" />
+
+	<ui:define name="header">
+		Expenses
+	</ui:define>
+
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<style>
+.ui-calendar input, .ui-spinner input {
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555 !important;
+	background-color: #fff !important;
+	background-image: none !important;
+	border: 1px solid #ccc !important;
+	border-radius: 4px !important;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
+}
+</style>
+		<h:form prependId="false">
+			<h:messages globalOnly="true" styleClass="error" />
+			<p:growl id="msg" showDetail="false" />
+
+			<div class="col-md-12" style="margin-bottom: 20px;">
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-md-6">
+							<h:outputLabel styleClass="control-label" value="From Date:" />
+						</div>
+						<div class="col-md-6">
+							<p:calendar id="fromDate" value="#{expenseController.fromDate}"
+								required="true" requiredMessage="The Date is Empty"
+								pattern="dd-MM-yyyy"></p:calendar>
+							<h:message for="fromDate" styleClass="error" />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-md-6">
+							<h:outputLabel styleClass="control-label" value="To Date:" />
+						</div>
+						<div class="col-md-6">
+							<p:calendar id="toDate" value="#{expenseController.toDate}"
+								required="true" requiredMessage="The Date is Empty"
+								pattern="dd-MM-yyyy"></p:calendar>
+							<h:message for="toDate" styleClass="error" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h:panelGroup id="output-panelGroup">
+				<div class="col-md-12" style="margin-bottom: 20px;">
+
+					<div class="col-md-4">
+
+						<div class="form-group">
+							<div class="col-md-6">
+								<h:outputLabel styleClass="control-label" value="Income:" />
+							</div>
+							<div class="col-md-6">
+								<h:inputText disabled="true" styleClass="form-control"
+									value="#{expenseController.income}" />
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+
+						<div class="form-group">
+							<div class="col-md-6">
+								<h:outputLabel styleClass="control-label" value="Expenses:" />
+							</div>
+							<div class="col-md-6">
+								<h:inputText disabled="true" styleClass="form-control"
+									value="#{expenseController.expenseSum}" />
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-md-4">
+
+						<div class="form-group">
+							<div class="col-md-6">
+								<h:outputLabel styleClass="control-label" value="Total:" />
+							</div>
+							<div class="col-md-6">
+								<h:inputText disabled="true" styleClass="form-control"
+									value="#{expenseController.total}" />
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+				<div class="col-md-12">
+					<h:panelGroup id="expenses-panelgroup">
+						<p:dataTable id="expensessDataTable" rows="10" paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15,20,50"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							value="#{expenseController.allExpenses}" var="expense"
+							rowKey="#{expense.id}" rowIndexVar="index" editable="true"
+							editMode="cell">
+
+							<p:column id="index" width="50">
+								<h:outputText value="#{index+1}"></h:outputText>
+							</p:column>
+
+							<p:column id="actions" width="50">
+								<h:commandLink styleClass="btn btn-sm btn-danger white"
+									action="#{expenseController.selectExpenseForDelete(expense)}"
+									onclick="PF('deleteDialogVar').show()">
+									<i class="fa fa-trash white" />
+									<f:ajax />
+								</h:commandLink>
+							</p:column>
+
+							<p:column id="type" headerText="Type" filterBy="#{expense.type}"
+								sortBy="#{expense.type}" filterMatchMode="contains">
+
+								<p:selectOneMenu value="#{expense.type}" style="width: 100%;">
+									<f:selectItem />
+									<f:selectItems value="#{expenseController.allExpenseKinds}"
+										var="item" itemLabel="#{item.value}" itemValue="#{item.value}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column id="value" headerText="Value"
+								filterBy="#{expense.value}" sortBy="#{expense.value}"
+								filterMatchMode="contains">
+								<p:spinner styleClass="text-align-left" value="#{expense.value}"
+									stepFactor="0.10" style="width: 100%;" min="0" />
+							</p:column>
+
+							<p:column id="date" headerText="Date" sortBy="#{treatment.date}">
+								<p:calendar value="#{expense.date}" pattern="dd-MM-yyyy"
+									style="width: 100%;" required="true" requiredMessage="Date Is Empty"></p:calendar>
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGroup>
+				</div>
+			</h:panelGroup>
+
+			<p:dialog id="deleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="deleteDialogVar">
+
+
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+
+				<h:commandLink value="Ok"
+					action="#{expenseController.deleteExpense()}"
+					onclick="PF('deleteDialogVar').hide()"
+					styleClass="btn btn-primary popup-buttons">
+					<f:ajax render="expenses-panelgroup" />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('deleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+
+
+			</p:dialog>
+
+			<div class="buttons file-treatments-button">
+
+				<h:commandLink value="Search" action="#{expenseController.search()}"
+					styleClass="btn btn-info">
+					<f:ajax execute="fromDate toDate" render="output-panelGroup" />
+				</h:commandLink>
+
+				<h:commandLink styleClass="btn btn-primary"
+					action="#{expenseController.addNewExpense()}">
+					<h:outputText value="Add" />
+					<f:ajax render="expenses-panelgroup" execute="expenses-panelgroup" />
+				</h:commandLink>
+
+				<h:commandLink value="Save" action="#{expenseController.save()}"
+					styleClass="btn btn-success">
+					<f:ajax execute="expenses-panelgroup" render="msg" />
+				</h:commandLink>
+			</div>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

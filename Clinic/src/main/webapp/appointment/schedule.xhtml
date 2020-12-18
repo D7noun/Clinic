@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="pageTitle" value="Create Appointment" />
+
+	<ui:define name="header">
+		Appointment
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="create">
+
+			<h:outputStylesheet name="css/attachment.css" />
+			<h:outputStylesheet name="css/selectOneMenu.css" />
+
+			<h:outputStylesheet name="css/pages/schedule.css" />
+
+			<p:growl id="messages" showDetail="false" />
+
+			<div class="row">
+				<div class="col-md-12">
+
+					<p:schedule id="schedule" value="#{appointmentBean.lazyEventModel}"
+						widgetVar="myScheduleVar" timeZone="GMT+2" minTime="08:00:00"
+						maxTime="20:00:00">
+
+						<p:ajax event="dateSelect"
+							listener="#{appointmentBean.onDateSelect}" update="eventDetails"
+							oncomplete="PF('eventDialog').show();" />
+						<p:ajax event="eventSelect"
+							listener="#{appointmentBean.onEventSelect}" update="eventDetails"
+							oncomplete="PF('eventDialog').show();" />
+						<p:ajax event="eventMove"
+							listener="#{appointmentBean.onEventMove}" update="messages" />
+						<p:ajax event="eventResize"
+							listener="#{appointmentBean.onEventResize}" update="messages" />
+
+					</p:schedule>
+
+				</div>
+			</div>
+
+			<p:dialog widgetVar="eventDialog" header="Event Details"
+				showEffect="clip" hideEffect="clip"
+				onShow="initCalendar();initSelectOneMenu();" resizable="false">
+				<h:panelGroup id="eventDetails">
+
+
+					<div class="col-md-12">
+						<div class="row">
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="col-md-4">
+										<h:outputLabel for="appointmentBeanAppointmentFile"
+											styleClass="control-label" value="File: *" />
+									</div>
+									<div class="col-md-8">
+										<p:selectOneMenu converter="#{fileBean.converter}"
+											id="appointmentBeanAppointmentFile"
+											value="#{appointmentBean.event.data.file}" filter="true"
+											filterMatchMode="contains" style="width: 95%;"
+											required="true" requiredMessage="The File is Empty">
+											<f:selectItem />
+											<f:selectItems
+												itemLabel="#{_item.name}/ #{_item.phoneNumber}"
+												itemValue="#{_item}" value="#{fileBean.all}" var="_item" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<h:message for="appointmentBeanAppointmentFile"
+									styleClass="error" />
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="col-md-4">
+										<h:outputLabel for="appointmentBeanAppointmentDrName"
+											styleClass="control-label" value="Dr Name:" />
+									</div>
+									<div class="col-md-8">
+										<p:selectOneMenu id="appointmentBeanAppointmentDrName"
+											value="#{appointmentBean.event.data.drName}"
+											style="width: 95%;" filter="true" filterMatchMode="contains"
+											required="true" requiredMessage="No Doctor">
+											<f:selectItem />
+											<f:selectItems value="#{fileBean.getAllDoctorNames()}"
+												var="item" itemLabel="#{item.value}"
+												itemValue="#{item.value}" />
+										</p:selectOneMenu>
+									</div>
+								</div>
+								<h:message for="appointmentBeanAppointmentDrName"
+									styleClass="error" />
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="col-md-4">
+										<p:outputLabel for="from" styleClass="control-label"
+											value="From:" />
+									</div>
+									<div class="col-md-8">
+										<p:calendar id="from"
+											value="#{appointmentBean.event.startDate}" timeZone="GMT+2"
+											pattern="dd-MM-yyyy h:mm a" minHour="8" maxHour="20"
+											required="true" requiredMessage="Empty Start Date" />
+									</div>
+								</div>
+								<h:message for="from" styleClass="error" />
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="col-md-4">
+										<p:outputLabel for="to" styleClass="control-label" value="To:" />
+									</div>
+									<div class="col-md-8">
+										<p:calendar id="to" value="#{appointmentBean.event.endDate}"
+											timeZone="GMT+2" pattern="dd-MM-yyyy h:mm a" minHour="8"
+											maxHour="20" required="true" requiredMessage="Empty End Date" />
+									</div>
+								</div>
+								<h:message for="to" styleClass="error" />
+							</div>
+
+						</div>
+					</div>
+
+					<p:commandLink id="addButton" value="Save"
+						styleClass="btn btn-primary white"
+						action="#{appointmentBean.saveEvent()}"
+						oncomplete="PF('myScheduleVar').update();PF('eventDialog').hide();">
+					</p:commandLink>
+
+					<h:commandLink value="Delete" styleClass="btn btn-danger white"
+						action="#{appointmentBean.selectForDelete()}"
+						onclick="PF('deleteDialogVar').show()">
+						<f:ajax />
+					</h:commandLink>
+
+				</h:panelGroup>
+			</p:dialog>
+
+			<p:dialog id="deleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="deleteDialogVar">
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+
+				<h:commandLink value="Ok" action="#{appointmentBean.delete}"
+					styleClass="btn btn-primary popup-buttons">
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('deleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+			</p:dialog>
+
+
+
+			<script type="text/javascript" src="../resources/js/selectOneMenu.js" />
+			<script type="text/javascript" src="../resources/js/calendar.js" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

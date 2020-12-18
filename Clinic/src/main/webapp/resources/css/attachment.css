@@ -1,0 +1,15 @@
+.attachmentHeaderText {
+	position: absolute;
+	left: 25px;
+	padding: 10px;
+}
+
+.attachmentHeaderButton {
+	position: absolute;
+	right: 25px;
+	margin: 5px;
+}
+
+.ui-datatable-header {
+	height: 47px;
+}

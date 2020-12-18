@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	xmlns:p="http://primefaces.org/ui"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value='#{treatmentsController.fileId}' />
+		<f:event type="preRenderView"
+			listener='#{treatmentsController.preRenderViewEvent}' />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="File Treatments" />
+
+	<ui:define name="header">
+		Treatments
+			<h:link outcome="create.xhtml" title="File"
+			styleClass="a-left-arrows">
+			<img src="../resources/left-arrow.png" class="left-arrows" />
+			<f:param name="id" value="#{treatmentsController.fileId}" />
+		</h:link>
+	</ui:define>
+
+	<ui:define name="subheader">
+		<h:outputText styleClass="subHeader"
+			value="#{treatmentsController.file.name}/#{treatmentsController.file.phoneNumber}" />
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+
+		<style>
+.ui-calendar input, .ui-spinner input {
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555 !important;
+	background-color: #fff !important;
+	background-image: none !important;
+	border: 1px solid #ccc !important;
+	border-radius: 4px !important;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
+}
+</style>
+		<h:form id="fileTreatments" prependId="false">
+			<h:messages globalOnly="true" styleClass="error" />
+			<p:growl id="msg" showDetail="false" />
+
+			<h:outputStylesheet name="css/selectOneMenu.css" />
+
+			<div class="col-md-12">
+				<h:panelGroup id="fileTreatments-panelgroup">
+					<p:dataTable id="fileTreatmentsDataTable" rows="10"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15,20,50" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom"
+						value="#{treatmentsController.file.treatments}" var="treatment"
+						rowKey="#{treatment.id}" rowIndexVar="index" editable="true"
+						editMode="cell">
+
+						<p:column id="index" width="50">
+							<h:outputText value="#{index+1}"></h:outputText>
+						</p:column>
+
+						<p:column id="actions" width="50">
+							<h:commandLink styleClass="btn btn-sm btn-danger white"
+								action="#{treatmentsController.selectForDelete(treatment)}"
+								onclick="PF('deleteDialogVar').show()">
+								<i class="fa fa-trash white" />
+								<f:ajax />
+							</h:commandLink>
+						</p:column>
+
+						<p:column id="date" width="120" headerText="Date"
+							sortBy="#{treatment.date}">
+							<p:calendar value="#{treatment.date}" pattern="dd-MM-yyyy" />
+						</p:column>
+
+						<p:column id="treatment" width="200" headerText="Treatment"
+							filterBy="#{treatment.treatment}" sortBy="#{treatment.treatment}"
+							filterMatchMode="contains">
+							<p:selectOneMenu value="#{treatment.treatment}"
+								style="width: 100%;">
+								<f:selectItem />
+								<f:selectItems value="#{treatmentsController.allTreatments}"
+									var="t" itemLabel="#{t}" itemValue="#{t}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column id="details" width="200" headerText="Details"
+							filterBy="#{treatment.details}" sortBy="#{treatment.details}"
+							filterMatchMode="contains">
+							<h:inputTextarea styleClass="form-control"
+								value="#{treatment.details}" />
+						</p:column>
+
+						<p:column id="total" width="120" headerText="Total"
+							filterBy="#{treatment.total}" sortBy="#{treatment.total}"
+							filterMatchMode="contains">
+							<p:spinner styleClass="text-align-left"
+								value="#{treatment.total}" style="width: 100%;" min="0"
+								stepFactor="0.1" />
+						</p:column>
+
+						<p:column id="received" width="120" headerText="Received"
+							filterBy="#{treatment.received}" sortBy="#{treatment.received}"
+							filterMatchMode="contains">
+							<p:spinner styleClass="text-align-left"
+								value="#{treatment.received}" style="width: 100%;" min="0"
+								stepFactor="0.1" />
+						</p:column>
+
+						<p:column id="balance" width="120" headerText="Balance"
+							filterBy="#{treatment.balance}" sortBy="#{treatment.balance}"
+							filterMatchMode="contains">
+							<h:inputText styleClass="form-control"
+								value="#{treatment.balance}" disabled="true" />
+						</p:column>
+
+						<p:column id="drName" width="120" headerText="Dr. Name"
+							filterBy="#{treatment.drName}" sortBy="#{treatment.drName}"
+							filterMatchMode="contains">
+							<p:selectOneMenu value="#{treatment.drName}" style="width: 100%;">
+								<f:selectItem />
+								<f:selectItems value="#{treatmentsController.allDoctors}"
+									var="item" itemLabel="#{item}" itemValue="#{item}" />
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:columnGroup type="footer">
+							<p:row>
+								<p:column />
+								<p:column />
+								<p:column />
+								<p:column />
+								<p:column />
+								<p:column footerText="#{treatmentsController.sumTotal()}" />
+								<p:column footerText="#{treatmentsController.sumReceived()}" />
+								<p:column footerText="#{treatmentsController.sumBalance()}" />
+								<p:column />
+							</p:row>
+						</p:columnGroup>
+
+					</p:dataTable>
+
+					<script>
+			$('.ui-spinner input').addClass('form-control');
+			$('.ui-calendar input').addClass('form-control');
+			$('.ui-selectonemenu label').addClass('form-control');
+			</script>
+				</h:panelGroup>
+			</div>
+
+
+			<p:dialog id="deleteDialog" draggable="false" closable="false"
+				modal="true" height="50" width="300" resizable="false"
+				widgetVar="deleteDialogVar">
+
+
+				<f:facet name="header">
+					<h:outputText value="Confirm Deletion????" />
+				</f:facet>
+
+				<h:commandLink value="Ok" action="#{treatmentsController.delete()}"
+					onclick="PF('deleteDialogVar').hide()"
+					styleClass="btn btn-primary popup-buttons">
+					<f:ajax render="fileTreatments-panelgroup" />
+				</h:commandLink>
+				<h:commandLink styleClass="btn btn-danger popup-buttons"
+					onclick="PF('deleteDialogVar').hide()">
+					<h:outputText value="Cancel" />
+					<f:ajax />
+				</h:commandLink>
+
+
+			</p:dialog>
+
+			<div class="buttons file-treatments-button">
+
+				<h:commandLink styleClass="btn btn-primary"
+					action="#{treatmentsController.addTreatment()}">
+					<h:outputText value="Add" />
+					<f:ajax render="fileTreatments-panelgroup"
+						execute="fileTreatments-panelgroup" />
+				</h:commandLink>
+
+				<h:commandLink value="Save" action="#{treatmentsController.save()}"
+					styleClass="btn btn-success">
+					<f:ajax execute="fileTreatments-panelgroup"
+						render="fileTreatments-panelgroup msg" />
+				</h:commandLink>
+			</div>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

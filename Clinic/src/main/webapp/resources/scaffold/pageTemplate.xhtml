@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+	<link rel="icon" href='#{resource["favicon.ico"]}' />
+
+	<h:outputStylesheet library="plugins"
+		name="bootstrap/css/bootstrap.css" />
+
+	<h:outputStylesheet name="font-awesome.min.css" library="css" />
+
+	<h:outputStylesheet name="forge-style-overriden.css" />
+	<h:outputStylesheet name="override.css" />
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js"
+		target="head" />
+	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+		target="head" />
+</h:head>
+
+<h:body>
+	<ui:debug
+		rendered="#{facesContext.application.projectStage == 'Development'}" />
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<h:link id="brandLink" outcome="/file/search.xhtml"
+					styleClass="brand">
+					<h:outputText value="Welcome to "
+						rendered=" #{request.userPrincipal !=null} " />
+                    Clinic  <i>SYSTEM</i>
+					<h:outputText value=",  #{request.userPrincipal.name}"
+						rendered="#{request.userPrincipal !=null} " />
+				</h:link>
+			</div>
+		</div>
+	</div>
+
+	<div class="container forgecontainer">
+		<div id="navigation">
+			<h:link id="homeLink" outcome="/file/search">
+				<h:graphicImage styleClass="forge-img"
+					value='#{resource["logo.png"]}' alt="clinic" border="0" />
+			</h:link>
+			<ul>
+				<li><h:link outcome="/file/search" value="File" /></li>
+				<li><h:link outcome="/appointment/search" value="Appointment" /></li>
+				<li><h:link outcome="/expenses" value="Expenses" /></li>
+			</ul>
+		</div>
+
+
+		<h:link outcome="/settings" style="float: right;">
+
+			<h:graphicImage value='#{resource["settings.png"]}'
+				style="height: 60px; width: 60px;" />
+		</h:link>
+
+		<div id="content">
+			<h1>
+				<ui:insert name="header" />
+			</h1>
+			<h4 style="color: #ee91ff;">
+				<ui:insert name="headerDetails" />
+			</h4>
+			<h2>
+				<ui:insert name="subheader" />
+			</h2>
+
+			<ui:insert name="main" />
+		</div>
+	</div>
+
+	<footer>
+		<div id="footer-wrapper">
+			<p>
+				<I>Powered by D7noun</I>
+			</p>
+			<p>D7nounSystem@gmail.com</p>
+			<p>9613072121</p>
+		</div>
+	</footer>
+
+</h:body>
+</html>

@@ -1,0 +1,36 @@
+.genderInputSwitch {
+	height: 44px;
+	padding: 10px 15px;
+}
+
+.questionsInputSwitch {
+	padding: 7px;
+}
+
+.leftArrowImageDiv {
+	color: red;
+	font-size: 30px;
+	position: relative;
+	top: 10px;
+}
+
+.leftArrowImageDiv img {
+	height: 35px;
+}
+
+.leftArrowImageDiv a {
+	text-decoration: none;
+}
+
+/*Question Borders*/
+.border-blue {
+	border-color: blue;
+	border-width: 2;
+	box-shadow: 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px blue !important;
+}
+
+.border-red {
+	border-color: red;
+	border-width: 2;
+	box-shadow: 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px red !important;
+}

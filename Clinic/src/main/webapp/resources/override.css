@@ -1,0 +1,12 @@
+.table-headerText {
+	float: left;
+	font-size: 15px;
+	top: 5px;
+	position: relative;
+}
+
+.table-headerButton {
+	display: inline-block;
+	left: 95px;
+	position: relative;
+}

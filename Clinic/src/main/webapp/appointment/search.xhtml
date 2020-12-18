@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="page" value='#{appointmentBean.page}' />
+		<f:event type="preRenderView" listener='#{appointmentBean.paginate}' />
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Appointment" />
+
+	<ui:define name="header">
+		Appointment
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Appointments
+	</ui:define>
+
+	<ui:define name="footer" />
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+
+						<h:outputLabel for="appointmentBeanExampleStartDate"
+							value="Start Date:" />
+						<h:panelGroup>
+							<p:calendar id="appointmentBeanExampleStartDate"
+								value="#{appointmentBean.example.startDate}"
+								pattern="dd-MM-yyyy"></p:calendar>
+							<h:message for="appointmentBeanExampleStartDate"
+								styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="appointmentBeanExampleEndDate"
+							value="End Date:" />
+						<h:panelGroup>
+							<p:calendar id="appointmentBeanExampleEndDate"
+								value="#{appointmentBean.example.endDate}" pattern="dd-MM-yyyy"></p:calendar>
+							<h:message for="appointmentBeanExampleEndDate" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="appointmentBeanExampleFile" value="File:" />
+						<h:panelGroup>
+
+							<p:selectOneMenu id="appointmentBeanExampleFile" filter="true"
+								filterMatchMode="contains" style="width:95%"
+								value="#{appointmentBean.example.file}"
+								converter="#{fileBean.converter}">
+								<f:selectItem />
+								<f:selectItems value="#{fileBean.all}" var="file"
+									itemLabel="#{file.name}/ #{file.phoneNumber}"
+									itemValue="#{file}"></f:selectItems>
+							</p:selectOneMenu>
+							<h:message for="appointmentBeanExampleFile" styleClass="error" />
+
+						</h:panelGroup>
+						<h:outputText />
+
+						<h:outputLabel for="appointmentBeanExampleDrName"
+							value="Dr. Name:" />
+						<h:panelGroup>
+							<p:selectOneMenu id="appointmentBeanExampleDrName"
+								value="#{appointmentBean.example.drName}" style="width: 95%;"
+								filter="true" filterMatchMode="contains">
+								<f:selectItem />
+								<f:selectItems value="#{fileBean.getAllDoctorNames()}"
+									var="item" itemLabel="#{item.value}" itemValue="#{item.value}" />
+							</p:selectOneMenu>
+
+							<h:message for="appointmentBeanExampleDrName" styleClass="error" />
+						</h:panelGroup>
+						<h:outputText />
+
+
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action='#{appointmentBean.search}'
+							styleClass="btn btn-primary" />
+						<h:commandLink value="Schedule" action='#{appointmentBean.create}'
+							styleClass="btn btn-success" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+
+			<h:dataTable id="appointmentBeanPageItems" styleClass="data-table"
+				value="#{appointmentBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Start Date" />
+					</f:facet>
+					<h:outputText id="_itemDate" value="#{_item.startDate}">
+						<f:convertDateTime type="date" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="End Date" />
+					</f:facet>
+					<h:outputText id="_itemTime" value="#{_item.endDate}">
+						<f:convertDateTime type="date" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="File" />
+					</f:facet>
+					<h:outputText
+						value="#{_item.file.name} / #{_item.file.phoneNumber}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Dr Name" />
+					</f:facet>
+					<h:outputText id="_itemDrName" value="#{_item.drName}" />
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value='#{appointmentBean}' />
+			</ui:include>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
